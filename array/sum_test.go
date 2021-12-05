@@ -1,15 +1,39 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"reflect"
+)
 
 func TestSum(t *testing.T) {
+	assertCorrectMessage := func(t testing.TB, got, expected int, numbers []int) {
+		t.Helper()
+		if got != expected {
+			t.Errorf("got %d want %d given, %v", got, expected, numbers)
+		}
+	}
 
-	numbers := [5]int{1, 2, 3, 4, 5}
+	// t.Run("collection of 5 nums", func(t *testing.T) {
+	// 	numbers := []int{1, 2, 3, 4, 5}
 
-	got := Sum(numbers)
-	expected := 15
+	// 	got := Sum(numbers)
+	// 	expected := 15
+	// 	assertCorrectMessage(t, got, expected, numbers)
+	// })
 
-	if got != expected {
-		t.Errorf("got %d want %d given, %v", got, expected, numbers)
+	t.Run("collection of any size", func(t *testing.T) {
+		numbers := []int{1, 2, 3}
+
+		got := Sum(numbers)
+		expected := 6
+		assertCorrectMessage(t, got, expected, numbers)
+	})
+}
+
+func TestSumAll(t *testing.T) {
+	got := SumAll([]int{1, 2}, []int{0, 9})
+	want := []int{3, 9}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %v want %v", got, want)
 	}
 }
